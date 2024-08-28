@@ -1,0 +1,70 @@
+**Behavioral and Photometry Data Analysis for head-fixed recordings using pyphotometry and monkeylogic**
+
+This Python script is designed to analyze licking and photometry data from behavioral trials, focusing on trial selection.
+It integrates data from various sources, processes the data to identify cues and licks, and analyzes licking behavior
+and photometric responses.
+
+**Features**
+* Loads and processes .mat and .ppd files for detailed trial analysis.
+* Utilizes a custom function from data_import to load and filter pyPhotometry data files.
+* Identifies cue timings and licks within each trial.
+* Performs down-sampling of data to match photometry acquisition rates.
+* Calculates lick rates and processes lick arrays to avoid double counting.
+* Analyzes photometric data to calculate deltaF/F for trials.
+* Produces visualizations including heatmaps and plots for data validation and analysis.
+* Calculate the Area Under the Curve (AUC) for selected trials.
+
+**Dependencies**
+This script requires the following Python libraries:
+numpy
+scipy
+matplotlib
+pandas
+seaborn
+sklearn
+Additionally, the import_ppd function from analysis.code.tools is used to load and optionally filter .ppd files.
+This function handles the reading of pyPhotometry data files into Python, applying any necessary signal filtering. 
+For a deeper understanding of the file format and the handling process, check the official pyPhotometry documentation.
+
+Ensure you have these installed. You can install them using pip
+
+**Setup**
+1. Clone the repository or download the script.
+2. Ensure all dependencies listed above are installed.
+3. Update the paths in the script to match the locations of your data files.
+
+**Configuration**
+Before running the script, ensure the following paths and parameters in the script are set according to your data:
+* Data Paths
+1. PATH_ML: Path to the MonkeyLogic .mat file.
+2. PATH_PHOTOMETRY: Path to the photometry .ppd file.
+3. TITLE1, TITLE2, TITLE3: Titles for the conditions you are analyzing. 
+
+* Trial Parameters 
+Ensure these parameters match your experimental setup:
+* start_cue_code: 23 (Code for the start of a cue)
+* stop_cue_code: 24 (Code for the end of a cue)
+* start_reward_code: 27 (Code for the start of a reward)
+* monkey_logic_hz: 1000 (Sampling rate for MonkeyLogic data)
+* photometry_hz: 50 (Sampling rate for photometry data)
+* space_between_cues: 4 * photometry_hz (Minimal time between cues)
+* first_space: 1 * photometry_hz (Time before the first cue)
+* pre_trial_length: photometry_hz * 4 (Pre-trial length to be included in analysis)
+* valve_1: 6 (Condition code in MonkeyLogic for a first outcome)
+* valve_2: 7 (Condition code in MonkeyLogic for a second outcome)
+* no_outcome: 3 (Code for trials with no outcome or a neutral cue)
+
+**Running the Script**
+To run the script, navigate to the script's directory in the terminal and execute:
+python BehavPhotomAnalyzer.py
+
+**Output**
+The script outputs several files including:
+1. CSV files with lick rates for each condition.
+2. Heatmaps saved as PNG files illustrating the trials.
+3. Log files capturing detailed outputs and statistics from the runs.
+Ensure that the output directory is writable and has enough space to handle the files generated.
+
+**Note**
+This script uses Qt5Agg as a backend for matplotlib which requires a GUI environment to display plots. 
+If running in a non-GUI environment, adjust the matplotlib backend appropriately.
